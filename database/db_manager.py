@@ -1,9 +1,9 @@
 import sqlite3
 
-from config import DB_NAME
+from .. import config
 
 def get_connection():
-    return sqlite3.connect(DB_NAME)
+    return sqlite3.connect(config.DB_NAME)
 
 def initialize_db():
     conn = get_connection
@@ -62,3 +62,5 @@ def initialize_db():
                    is_confirmed BOOLEAN NOT NULL DEFAULT 0,
                    FOREIGN KEY (client_id) REFERENCES clients(id),
                    FOREIGN KEY (room_id) REFERENCES rooms(id))''')
+    conn.commit()
+    conn.close()
