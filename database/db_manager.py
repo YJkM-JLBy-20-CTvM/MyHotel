@@ -1,6 +1,6 @@
 import sqlite3
 
-DB_NAME = "Hotel.db"
+from config import DB_NAME
 
 def get_connection():
     return sqlite3.connect(DB_NAME)

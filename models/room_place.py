@@ -30,3 +30,13 @@ class RoomPlace:
             cursor.execute("DELETE FROM room_places WHERE id = ?", (self.id,))
             conn.commit()
             conn.close()
+
+def get_places_by_room_id(room_id):
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT id, room_id, place_number FROM room_places WHERE room_id = ?
+    """, (room_id,))
+    rows = cursor.fetchall()
+    conn.close()
+    return [RoomPlace(id=row[0], room_id=row[1], place_number=row[2]) for row in rows]
