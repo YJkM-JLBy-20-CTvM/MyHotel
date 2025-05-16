@@ -1,6 +1,6 @@
 import sqlite3
 
-from config import DB_NAME
+DB_NAME = "Hotel.db"
 
 def get_connection():
     return sqlite3.connect(DB_NAME)
@@ -30,19 +30,19 @@ def initialize_db():
                    FOREIGN KEY (client_id) REFERENCES clients(id),
                    FOREIGN KEY (discount_category_id) REFERENCES discount_categories(id))''')
     
-    cursor.execute('''CREATE TABLE rooms(
+    cursor.execute('''CREATE TABLE IF NOT EXISTS rooms(
                    id INTEGER PRIMARY KEY AUTOINCREMENT,
                    type TEXT NOT NULL CHECK(type IN ("люкс", "полулюкс", "обычный")),
                    capacity INTEGER NOT NULL CHECK(capacity > 0),
                    price REAL NOT NULL CHECK(price >= 0))''')
     
-    cursor.execute('''CREATE TABLE room_places(
+    cursor.execute('''CREATE TABLE IF NOT EXISTS room_places(
                    id INTEGER PRIMARY KEY AUTOINCREMENT,
                    room_id INTEGER NOT NULL,
                    place_number INTEGER NOT NULL CHECK(place_number > 0),
                    FOREIGN KEY (room_id) REFERENCES rooms(id))''')
     
-    cursor.execute('''CREATE TABLE checkins(
+    cursor.execute('''CREATE TABLE IF NOT EXISTS checkins(
                    id INTEGER PRIMARY KEY AUTOINCREMENT,
                    client_id INTEGER NOT NULL,
                    room_id INTEGER NOT NULL,
@@ -51,9 +51,9 @@ def initialize_db():
                    checkout_date DATE,
                    FOREIGN KEY (client_id) REFERENCES clients(id),
                    FOREIGN KEY (room_id) REFERENCES rooms(id),
-                   FOREIGN KEY (place_id) REFERENCES room_places(id)''')
+                   FOREIGN KEY (place_id) REFERENCES room_places(id))''')
     
-    cursor.execute('''CREATE TABLE booking(
+    cursor.execute('''CREATE TABLE IF NOT EXISTS booking(
                    id INTEGER PRIMARY KEY AUTOINCREMENT,
                    client_id INTEGER NOT NULL,
                    room_id INTEGER NOT NULL,

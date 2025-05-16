@@ -1,0 +1,49 @@
+from database.db_manager import get_connection
+
+class Room:
+    def __init__(self, id=None, type=None, capacity=None, price=None):
+        self.id = id
+        self.type = type
+        self.capacity = capacity
+        self.price = price
+
+    def save(self):
+        conn = get_connection()
+        cursor = conn.cursor()
+        if self.id is None:
+            cursor.execute("""
+                INSERT INTO rooms (type, capacity, price)
+                VALUES (?, ?, ?)
+            """, (self.type, self.capacity, self.price))
+            self.id = cursor.lastrowid
+        else:
+            cursor.execute("""
+                UPDATE rooms SET type = ?, capacity = ?, price = ?
+                WHERE id = ?
+            """, (self.type, self.capacity, self.price, self.id))
+        conn.commit()
+        conn.close()
+
+    def delete(self):
+        if self.id is not None:
+            conn = get_connection()
+            cursor = conn.cursor()
+            cursor.execute("DELETE FROM rooms WHERE id = ?", (self.id,))
+            conn.commit()
+            conn.close()
+
+def get_all_rooms():
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT id, type, capacity, price FROM rooms")
+        rows = cursor.fetchall()
+        conn.close()
+        return [Room(*row) for row in rows]
+
+def get_room_by_id(room_id):
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT id, type, capacity, price FROM rooms WHERE id = ?", (room_id,))
+        row = cursor.fetchone()
+        conn.close()
+        return Room(*row) if row else None
