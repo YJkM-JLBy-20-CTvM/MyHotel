@@ -11,28 +11,28 @@ class Checkin:
 
     def save(self):
         conn = get_connection()
-        cursor = conn.cursor()
+        cur = conn.cursor()
         if self.id is None:
-            cursor.execute("""
+            cur.execute('''
                 INSERT INTO checkins (client_id, room_id, place_id, checkin_date, checkout_date)
                 VALUES (?, ?, ?, ?, ?)
-            """, (self.client_id, self.room_id, self.place_id, self.checkin_date, self.checkout_date))
-            self.id = cursor.lastrowid
+            ''', (self.client_id, self.room_id, self.place_id, self.checkin_date, self.checkout_date))
+            self.id = cur.lastrowid
         else:
-            cursor.execute("""
+            cur.execute('''
                 UPDATE checkins SET client_id = ?, room_id = ?, place_id = ?, checkin_date = ?, checkout_date = ?
                 WHERE id = ?
-            """, (self.client_id, self.room_id, self.place_id, self.checkin_date, self.checkout_date, self.id))
+            ''', (self.client_id, self.room_id, self.place_id, self.checkin_date, self.checkout_date, self.id))
         conn.commit()
         conn.close()
 
 def get_all_checkins():
     conn = get_connection()
-    cursor = conn.cursor()
-    cursor.execute("""
+    cur = conn.cursor()
+    cur.execute('''
         SELECT id, client_id, room_id, place_id, checkin_date, checkout_date FROM checkins
-    """)
-    rows = cursor.fetchall()
+    ''')
+    rows = cur.fetchall()
     conn.close()
     return [
         Checkin(
@@ -48,11 +48,11 @@ def get_all_checkins():
 
 def get_checkin_by_id(checkin_id):
     conn = get_connection()
-    cursor = conn.cursor()
-    cursor.execute("""
+    cur = conn.cursor()
+    cur.execute('''
         SELECT id, client_id, room_id, place_id, checkin_date, checkout_date FROM checkins WHERE id = ?
-    """, (checkin_id,))
-    row = cursor.fetchone()
+    ''', (checkin_id,))
+    row = cur.fetchone()
     conn.close()
     if row:
         return Checkin(

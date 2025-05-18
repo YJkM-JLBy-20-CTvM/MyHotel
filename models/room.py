@@ -9,41 +9,41 @@ class Room:
 
     def save(self):
         conn = get_connection()
-        cursor = conn.cursor()
+        cur = conn.cursor()
         if self.id is None:
-            cursor.execute("""
+            cur.execute('''
                 INSERT INTO rooms (type, capacity, price)
                 VALUES (?, ?, ?)
-            """, (self.type, self.capacity, self.price))
-            self.id = cursor.lastrowid
+            ''', (self.type, self.capacity, self.price))
+            self.id = cur.lastrowid
         else:
-            cursor.execute("""
+            cur.execute('''
                 UPDATE rooms SET type = ?, capacity = ?, price = ?
                 WHERE id = ?
-            """, (self.type, self.capacity, self.price, self.id))
+            ''', (self.type, self.capacity, self.price, self.id))
         conn.commit()
         conn.close()
 
     def delete(self):
         if self.id is not None:
             conn = get_connection()
-            cursor = conn.cursor()
-            cursor.execute("DELETE FROM rooms WHERE id = ?", (self.id,))
+            cur = conn.cursor()
+            cur.execute('DELETE FROM rooms WHERE id = ?', (self.id,))
             conn.commit()
             conn.close()
 
 def get_all_rooms():
         conn = get_connection()
-        cursor = conn.cursor()
-        cursor.execute("SELECT id, type, capacity, price FROM rooms")
-        rows = cursor.fetchall()
+        cur = conn.cursor()
+        cur.execute('SELECT id, type, capacity, price FROM rooms')
+        rows = cur.fetchall()
         conn.close()
         return [Room(*row) for row in rows]
 
 def get_room_by_id(room_id):
         conn = get_connection()
-        cursor = conn.cursor()
-        cursor.execute("SELECT id, type, capacity, price FROM rooms WHERE id = ?", (room_id,))
-        row = cursor.fetchone()
+        cur = conn.cursor()
+        cur.execute('SELECT id, type, capacity, price FROM rooms WHERE id = ?', (room_id,))
+        row = cur.fetchone()
         conn.close()
         return Room(*row) if row else None

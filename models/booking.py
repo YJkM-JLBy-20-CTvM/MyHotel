@@ -11,27 +11,27 @@ class Booking:
 
     def save(self):
         conn = get_connection()
-        cursor = conn.cursor()
+        cur = conn.cursor()
         if self.id is None:
-            cursor.execute("""
+            cur.execute('''
                 INSERT INTO booking (client_id, room_id, start_date, end_date, is_confirmed)
                 VALUES (?, ?, ?, ?, ?)
-            """, (self.client_id, self.room_id, self.start_date, self.end_date, self.is_confirmed))
-            self.id = cursor.lastrowid
+            ''', (self.client_id, self.room_id, self.start_date, self.end_date, self.is_confirmed))
+            self.id = cur.lastrowid
         else:
-            cursor.execute("""
+            cur.execute('''
                 UPDATE booking SET client_id = ?, room_id = ?, start_date = ?, end_date = ?, is_confirmed = ?
                 WHERE id = ?
-            """, (self.client_id, self.room_id, self.start_date, self.end_date, self.is_confirmed, self.id))
+            ''', (self.client_id, self.room_id, self.start_date, self.end_date, self.is_confirmed, self.id))
         conn.commit()
         conn.close()
 def get_all_bookings():
     conn = get_connection()
-    cursor = conn.cursor()
-    cursor.execute("""
+    cur = conn.cursor()
+    cur.execute('''
         SELECT id, client_id, room_id, start_date, end_date, is_confirmed FROM booking
-    """)
-    rows = cursor.fetchall()
+    ''')
+    rows = cur.fetchall()
     conn.close()
     return [
         Booking(
@@ -47,11 +47,11 @@ def get_all_bookings():
 
 def get_booking_by_id(booking_id):
     conn = get_connection()
-    cursor = conn.cursor()
-    cursor.execute("""
+    cur = conn.cursor()
+    cur.execute('''
         SELECT id, client_id, room_id, start_date, end_date, is_confirmed FROM booking WHERE id = ?
-    """, (booking_id,))
-    row = cursor.fetchone()
+    ''', (booking_id,))
+    row = cur.fetchone()
     conn.close()
     if row:
         return Booking(

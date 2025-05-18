@@ -13,41 +13,43 @@ class Client:
 
     def save(self):
         conn = get_connection()
-        cursor = conn.cursor()
+        cur = conn.cursor()
+
         if self.id is None:
-            cursor.execute("""
+            cur.execute('''
                 INSERT INTO clients (surname, name, patronymic, passport_details, address, comment)
                 VALUES (?, ?, ?, ?, ?, ?)
-            """, (self.surname, self.name, self.patronymic, self.passport_details, self.address, self.comment))
-            self.id = cursor.lastrowid
+            ''', (self.surname, self.name, self.patronymic, self.passport_details, self.address, self.comment))
+            self.id = cur.lastrowid
+            
         else:
-            cursor.execute("""
+            cur.execute('''
                 UPDATE clients SET surname = ?, name = ?, patronymic = ?, passport_details = ?, address = ?, comment = ?
                 WHERE id = ?
-            """, (self.surname, self.name, self.patronymic, self.passport_details, self.address, self.comment, self.id))
+            ''', (self.surname, self.name, self.patronymic, self.passport_details, self.address, self.comment, self.id))
         conn.commit()
         conn.close()
 
     def delete(self):
         if self.id is not None:
             conn = get_connection()
-            cursor = conn.cursor()
-            cursor.execute("DELETE FROM clients WHERE id = ?", (self.id,))
+            cur = conn.cursor()
+            cur.execute('DELETE FROM clients WHERE id = ?', (self.id,))
             conn.commit()
             conn.close()
 
 def get_all_clients():
     conn = get_connection()
-    cursor = conn.cursor()
-    cursor.execute("SELECT id, surname, name, patronymic, passport_details, address, comment FROM clients")
-    rows = cursor.fetchall()
+    cur = conn.cursor()
+    cur.execute('SELECT id, surname, name, patronymic, passport_details, address, comment FROM clients')
+    rows = cur.fetchall()
     conn.close()
     return [Client(*row) for row in rows]
 
 def get_client_by_id(client_id):
     conn = get_connection()
-    cursor = conn.cursor()
-    cursor.execute("SELECT id, surname, name, patronymic, passport_details, address, comment FROM clients WHERE id = ?", (client_id,))
-    row = cursor.fetchone()
+    cur = conn.cursor()
+    cur.execute('SELECT id, surname, name, patronymic, passport_details, address, comment FROM clients WHERE id = ?', (client_id,))
+    row = cur.fetchone()
     conn.close()
     return Client(*row) if row else None

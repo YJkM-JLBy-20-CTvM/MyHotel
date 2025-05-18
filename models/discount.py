@@ -8,38 +8,38 @@ class DiscountCategory:
 
     def save(self):
         conn = get_connection()
-        cursor = conn.cursor()
+        cur = conn.cursor()
         if self.id is None:
-            cursor.execute("""
+            cur.execute('''
                 INSERT INTO discount_categories (name, discount_percent)
                 VALUES (?, ?)
-            """, (self.name, self.discount_percent))
-            self.id = cursor.lastrowid
+            ''', (self.name, self.discount_percent))
+            self.id = cur.lastrowid
         else:
-            cursor.execute("""
+            cur.execute('''
                 UPDATE discount_categories SET name = ?, discount_percent = ?
                 WHERE id = ?
-            """, (self.name, self.discount_percent, self.id))
+            ''', (self.name, self.discount_percent, self.id))
         conn.commit()
         conn.close()
 
 def get_all_discount_categories():
     conn = get_connection()
-    cursor = conn.cursor()
-    cursor.execute("""
+    cur = conn.cursor()
+    cur.execute('''
         SELECT id, name, discount_percent FROM discount_categories
-    """)
-    rows = cursor.fetchall()
+    ''')
+    rows = cur.fetchall()
     conn.close()
     return [DiscountCategory(id=row[0], name=row[1], discount_percent=row[2]) for row in rows]
 
 def get_discount_category_by_id(category_id):
     conn = get_connection()
-    cursor = conn.cursor()
-    cursor.execute("""
+    cur = conn.cursor()
+    cur.execute('''
         SELECT id, name, discount_percent FROM discount_categories WHERE id = ?
-    """, (category_id,))
-    row = cursor.fetchone()
+    ''', (category_id,))
+    row = cur.fetchone()
     conn.close()
     if row:
         return DiscountCategory(id=row[0], name=row[1], discount_percent=row[2])
@@ -53,17 +53,17 @@ class ClientDiscount:
 
     def save(self):
         conn = get_connection()
-        cursor = conn.cursor()
+        cur = conn.cursor()
         if self.id is None:
-            cursor.execute("""
+            cur.execute('''
                 INSERT INTO client_discounts (client_id, discount_category_id)
                 VALUES (?, ?)
-            """, (self.client_id, self.discount_category_id))
-            self.id = cursor.lastrowid
+            ''', (self.client_id, self.discount_category_id))
+            self.id = cur.lastrowid
         else:
-            cursor.execute("""
+            cur.execute('''
                 UPDATE client_discounts SET client_id = ?, discount_category_id = ?
                 WHERE id = ?
-            """, (self.client_id, self.discount_category_id, self.id))
+            ''', (self.client_id, self.discount_category_id, self.id))
         conn.commit()
         conn.close()

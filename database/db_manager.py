@@ -7,9 +7,10 @@ def get_connection():
 
 def initialize_db():
     conn = get_connection()
-    cursor = conn.cursor()
+    cur = conn.cursor()
 
-    cursor.execute('''CREATE TABLE IF NOT EXISTS clients(
+    cur.execute('''CREATE TABLE IF NOT EXISTS clients(
+                
                    id INTEGER PRIMARY KEY AUTOINCREMENT,
                    surname TEXT NOT NULL,
                    name TEXT NOT NULL,
@@ -18,31 +19,36 @@ def initialize_db():
                    address TEXT,
                    comment TEXT)''')
     
-    cursor.execute('''CREATE TABLE IF NOT EXISTS discount_categories(
+    cur.execute('''CREATE TABLE IF NOT EXISTS discount_categories(
+                
                    id INTEGER PRIMARY KEY AUTOINCREMENT,
                    name TEXT NOT NULL,
                    discount_percent REAL NOT NULL CHECK(discount_percent >= 0))''')
     
-    cursor.execute('''CREATE TABLE IF NOT EXISTS client_discounts(
+    cur.execute('''CREATE TABLE IF NOT EXISTS client_discounts(
+                
                    id INTEGER PRIMARY KEY AUTOINCREMENT,
                    client_id INTEGER NOT NULL,
                    discount_category_id INTEGER NOT NULL,
                    FOREIGN KEY (client_id) REFERENCES clients(id),
                    FOREIGN KEY (discount_category_id) REFERENCES discount_categories(id))''')
     
-    cursor.execute('''CREATE TABLE IF NOT EXISTS rooms(
+    cur.execute('''CREATE TABLE IF NOT EXISTS rooms(
+                
                    id INTEGER PRIMARY KEY AUTOINCREMENT,
                    type TEXT NOT NULL CHECK(type IN ("люкс", "полулюкс", "обычный")),
                    capacity INTEGER NOT NULL CHECK(capacity > 0),
                    price REAL NOT NULL CHECK(price >= 0))''')
     
-    cursor.execute('''CREATE TABLE IF NOT EXISTS room_places(
+    cur.execute('''CREATE TABLE IF NOT EXISTS room_places(
+                
                    id INTEGER PRIMARY KEY AUTOINCREMENT,
                    room_id INTEGER NOT NULL,
                    place_number INTEGER NOT NULL CHECK(place_number > 0),
                    FOREIGN KEY (room_id) REFERENCES rooms(id))''')
     
-    cursor.execute('''CREATE TABLE IF NOT EXISTS checkins(
+    cur.execute('''CREATE TABLE IF NOT EXISTS checkins(
+                
                    id INTEGER PRIMARY KEY AUTOINCREMENT,
                    client_id INTEGER NOT NULL,
                    room_id INTEGER NOT NULL,
@@ -53,7 +59,8 @@ def initialize_db():
                    FOREIGN KEY (room_id) REFERENCES rooms(id),
                    FOREIGN KEY (place_id) REFERENCES room_places(id))''')
     
-    cursor.execute('''CREATE TABLE IF NOT EXISTS booking(
+    cur.execute('''CREATE TABLE IF NOT EXISTS booking(
+                
                    id INTEGER PRIMARY KEY AUTOINCREMENT,
                    client_id INTEGER NOT NULL,
                    room_id INTEGER NOT NULL,
@@ -62,5 +69,6 @@ def initialize_db():
                    is_confirmed BOOLEAN NOT NULL DEFAULT 0,
                    FOREIGN KEY (client_id) REFERENCES clients(id),
                    FOREIGN KEY (room_id) REFERENCES rooms(id))''')
+    
     conn.commit()
     conn.close()
