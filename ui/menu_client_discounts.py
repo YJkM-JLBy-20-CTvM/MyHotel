@@ -21,7 +21,7 @@ def menu_client_discounts():
         elif choice == "2":
             print("\nКлиенты:")
             for c in get_all_clients():
-                print(f"{c.id} - {c.last_name} {c.first_name}")
+                print(f"{c.id} - {c.surname} {c.name}")
 
             client_id = int(input("Введите ID клиента: "))
 
