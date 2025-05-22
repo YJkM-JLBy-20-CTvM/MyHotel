@@ -13,13 +13,14 @@ def menu_rooms():
         if choice == "1":
             rooms = get_all_rooms()
             for r in rooms:
-                print(f"{r.id}. Тип: {r.type}, Вместимость: {r.capacity}, Цена: {r.price} руб.")
+                print(f"{r.id}. Номер комнаты: {r.place}, Тип: {r.type}, Вместимость: {r.capacity}, Цена: {r.price} руб.")
 
         elif choice == "2":
+            room_place = input("Номер комнаты: ")
             room_type = input("Тип (люкс / полулюкс / обычный): ")
             capacity = int(input("Вместимость: "))
             price = float(input("Цена: "))
-            room = Room(type=room_type, capacity=capacity, price=price)
+            room = Room(place = room_place, type=room_type, capacity=capacity, price=price)
             room.save()
             print("[✓] Номер добавлен.")
 
@@ -35,6 +36,7 @@ def menu_rooms():
             if not current:
                 print("[⁉︎] Номер не найден.")
                 continue
+            room_place = input(f"Номер комнаты ({current.place})" or current.place)
             room_type = input(f"Тип ({current.type}): ") or current.type
             capacity = input(f"Вместимость ({current.capacity}): ") or current.capacity
             price = input(f"Цена ({current.price}): ") or current.price

@@ -6,7 +6,6 @@ from ui.menu_checkins import menu_checkins
 from ui.menu_bookings import menu_bookings
 from ui.menu_discounts import menu_discounts
 from ui.menu_client_discounts import menu_client_discounts
-from ui.menu_room_places import menu_room_places
 
 def main():
     initialize_db()
@@ -24,8 +23,6 @@ def main():
             menu_discounts()
         elif user_choice == "6":
             menu_client_discounts()
-        elif user_choice == "7":
-            menu_room_places()
         elif user_choice == "0":
             print("Выход из программы. До свидания!")
             break

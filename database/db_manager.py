@@ -1,5 +1,4 @@
 import sqlite3
-
 from config import DB_NAME
 
 def get_connection():
@@ -36,16 +35,10 @@ def initialize_db():
     cur.execute('''CREATE TABLE IF NOT EXISTS rooms(
                 
                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                   place INTEGER NOT NULL CHECK(place > 0),
                    type TEXT NOT NULL CHECK(type IN ("люкс", "полулюкс", "обычный")),
                    capacity INTEGER NOT NULL CHECK(capacity > 0),
                    price REAL NOT NULL CHECK(price >= 0))''')
-    
-    cur.execute('''CREATE TABLE IF NOT EXISTS room_places(
-                
-                   id INTEGER PRIMARY KEY AUTOINCREMENT,
-                   room_id INTEGER NOT NULL,
-                   place_number INTEGER NOT NULL CHECK(place_number > 0),
-                   FOREIGN KEY (room_id) REFERENCES rooms(id))''')
     
     cur.execute('''CREATE TABLE IF NOT EXISTS checkins(
                 
