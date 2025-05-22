@@ -1,5 +1,6 @@
 from database.db_manager import get_connection
 
+
 class Booking:
     def __init__(self, id=None, client_id=None, room_id=None, start_date=None, end_date=None, is_confirmed=False):
         self.id = id
@@ -25,6 +26,8 @@ class Booking:
             ''', (self.client_id, self.room_id, self.start_date, self.end_date, self.is_confirmed, self.id))
         conn.commit()
         conn.close()
+
+
 def get_all_bookings():
     conn = get_connection()
     cur = conn.cursor()
@@ -44,6 +47,7 @@ def get_all_bookings():
         )
         for row in rows
     ]
+
 
 def get_booking_by_id(booking_id):
     conn = get_connection()

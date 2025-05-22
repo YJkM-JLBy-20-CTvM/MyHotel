@@ -7,6 +7,7 @@ from ui.menu_bookings import menu_bookings
 from ui.menu_discounts import menu_discounts
 from ui.menu_client_discounts import menu_client_discounts
 
+
 def main():
     initialize_db()
     while True:
@@ -28,6 +29,7 @@ def main():
             break
         else:
             print("[⁉︎] Неверный ввод. Пожалуйста, попробуйте снова.")
+
 
 if __name__ == "__main__":
     main()

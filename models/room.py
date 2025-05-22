@@ -1,7 +1,9 @@
 from database.db_manager import get_connection
 
+
 class Room:
-    def __init__(self, id=None, type=None, capacity=None, price=None, place=None):
+
+    def __init__(self, id=None, place=None, type=None, capacity=None, price=None):
         self.id = id
         self.type = type
         self.capacity = capacity
@@ -33,18 +35,20 @@ class Room:
             conn.commit()
             conn.close()
 
+
 def get_all_rooms():
-        conn = get_connection()
-        cur = conn.cursor()
-        cur.execute('SELECT id, type, capacity, price, place FROM rooms')
-        rows = cur.fetchall()
-        conn.close()
-        return [Room(*row) for row in rows]
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute('SELECT id, type, capacity, price, place FROM rooms')
+    rows = cur.fetchall()
+    conn.close()
+    return [Room(*row) for row in rows]
+
 
 def get_room_by_id(room_id):
-        conn = get_connection()
-        cur = conn.cursor()
-        cur.execute('SELECT id, type, capacity, price, place FROM rooms WHERE id = ?', (room_id,))
-        row = cur.fetchone()
-        conn.close()
-        return Room(*row) if row else None
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute('SELECT id, type, capacity, price, place FROM rooms WHERE id = ?', (room_id,))
+    row = cur.fetchone()
+    conn.close()
+    return Room(*row) if row else None

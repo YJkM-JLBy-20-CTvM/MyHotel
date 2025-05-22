@@ -1,6 +1,8 @@
 from database.db_manager import get_connection
 
+
 class ClientDiscount:
+
     def __init__(self, id=None, client_id=None, discount_category_id=None):
         self.id = id
         self.client_id = client_id
@@ -30,6 +32,7 @@ class ClientDiscount:
             cur.execute('DELETE FROM client_discounts WHERE id = ?', (self.id,))
             conn.commit()
             conn.close()
+
 
 def get_discounts_by_client_id(client_id):
     conn = get_connection()

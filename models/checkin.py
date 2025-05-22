@@ -1,6 +1,8 @@
 from database.db_manager import get_connection
 
+
 class Checkin:
+
     def __init__(self, id=None, client_id=None, room_id=None, place_id=None, checkin_date=None, checkout_date=None):
         self.id = id
         self.client_id = client_id
@@ -26,6 +28,7 @@ class Checkin:
         conn.commit()
         conn.close()
 
+
 def get_all_checkins():
     conn = get_connection()
     cur = conn.cursor()
@@ -45,6 +48,7 @@ def get_all_checkins():
         )
         for row in rows
     ]
+
 
 def get_checkin_by_id(checkin_id):
     conn = get_connection()

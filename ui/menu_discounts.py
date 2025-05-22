@@ -1,5 +1,6 @@
 from models.discount import DiscountCategory, get_all_discount_categories
 
+
 def menu_discounts():
     while True:
         print("\n=== Скидки ===")

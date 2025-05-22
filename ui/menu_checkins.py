@@ -1,5 +1,6 @@
 from models.checkin import Checkin, get_all_checkins
 
+
 def menu_checkins():
     while True:
         print("\n=== Заселения ===")

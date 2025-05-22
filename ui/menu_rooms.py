@@ -1,5 +1,6 @@
 from models.room import Room, get_all_rooms
 
+
 def menu_rooms():
     while True:
         print("\n=== Номера ===")
@@ -20,7 +21,7 @@ def menu_rooms():
             room_type = input("Тип (люкс / полулюкс / обычный): ")
             capacity = int(input("Вместимость: "))
             price = float(input("Цена: "))
-            room = Room(place = room_place, type=room_type, capacity=capacity, price=price)
+            room = Room(place=room_place, type=room_type, capacity=capacity, price=price)
             room.save()
             print("[✓] Номер добавлен.")
 

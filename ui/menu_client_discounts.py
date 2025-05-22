@@ -2,6 +2,7 @@ from models.client_discount import ClientDiscount, get_discounts_by_client_id
 from models.client import get_all_clients
 from models.discount import get_all_discount_categories
 
+
 def menu_client_discounts():
     while True:
         print("\n=== Скидки клиентов ===")

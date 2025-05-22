@@ -1,5 +1,6 @@
 from models.booking import Booking, get_all_bookings
 
+
 def menu_bookings():
     while True:
         print("\n=== Бронирование ===")
@@ -26,7 +27,7 @@ def menu_bookings():
         elif choice == "3":
             id_to_confirm = int(input("ID брони: "))
             booking = next((b for b in get_all_bookings() if b.id == id_to_confirm), None)
-            
+
             if booking:
                 booking.is_confirmed = True
                 booking.save()
@@ -37,6 +38,6 @@ def menu_bookings():
 
         elif choice == "0":
             break
-        
+
         else:
             print("[⁉︎]~ Неверный ввод.")

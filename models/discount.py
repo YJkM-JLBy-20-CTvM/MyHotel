@@ -1,6 +1,8 @@
 from database.db_manager import get_connection
 
+
 class DiscountCategory:
+
     def __init__(self, id=None, name=None, discount_percent=0.0):
         self.id = id
         self.name = name
@@ -11,33 +13,35 @@ class DiscountCategory:
         cur = conn.cursor()
         if self.id is None:
             cur.execute('''
-                INSERT INTO discount_categories (name, discount_percent)
+                INSERT INTO discounts (name, discount_percent)
                 VALUES (?, ?)
             ''', (self.name, self.discount_percent))
             self.id = cur.lastrowid
         else:
             cur.execute('''
-                UPDATE discount_categories SET name = ?, discount_percent = ?
+                UPDATE discounts SET name = ?, discount_percent = ?
                 WHERE id = ?
             ''', (self.name, self.discount_percent, self.id))
         conn.commit()
         conn.close()
 
+
 def get_all_discount_categories():
     conn = get_connection()
     cur = conn.cursor()
     cur.execute('''
-        SELECT id, name, discount_percent FROM discount_categories
+        SELECT id, name, discount_percent FROM discounts
     ''')
     rows = cur.fetchall()
     conn.close()
     return [DiscountCategory(id=row[0], name=row[1], discount_percent=row[2]) for row in rows]
 
+
 def get_discount_category_by_id(category_id):
     conn = get_connection()
     cur = conn.cursor()
     cur.execute('''
-        SELECT id, name, discount_percent FROM discount_categories WHERE id = ?
+        SELECT id, name, discount_percent FROM discounts WHERE id = ?
     ''', (category_id,))
     row = cur.fetchone()
     conn.close()
@@ -45,7 +49,9 @@ def get_discount_category_by_id(category_id):
         return DiscountCategory(id=row[0], name=row[1], discount_percent=row[2])
     return None
 
+
 class ClientDiscount:
+
     def __init__(self, id=None, client_id=None, discount_category_id=None):
         self.id = id
         self.client_id = client_id

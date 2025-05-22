@@ -1,5 +1,6 @@
 from models.client import Client, get_all_clients
 
+
 def menu_clients():
     while True:
         print("\n=== Клиенты ===")

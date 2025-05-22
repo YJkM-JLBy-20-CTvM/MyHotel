@@ -1,6 +1,8 @@
 from database.db_manager import get_connection
 
+
 class Client:
+
     def __init__(self, id=None, surname=None, name=None, patronymic=None,
                  passport_details=None, address=None, comment=None):
         self.id = id
@@ -21,7 +23,7 @@ class Client:
                 VALUES (?, ?, ?, ?, ?, ?)
             ''', (self.surname, self.name, self.patronymic, self.passport_details, self.address, self.comment))
             self.id = cur.lastrowid
-            
+
         else:
             cur.execute('''
                 UPDATE clients SET surname = ?, name = ?, patronymic = ?, passport_details = ?, address = ?, comment = ?
@@ -38,6 +40,7 @@ class Client:
             conn.commit()
             conn.close()
 
+
 def get_all_clients():
     conn = get_connection()
     cur = conn.cursor()
@@ -45,6 +48,7 @@ def get_all_clients():
     rows = cur.fetchall()
     conn.close()
     return [Client(*row) for row in rows]
+
 
 def get_client_by_id(client_id):
     conn = get_connection()
