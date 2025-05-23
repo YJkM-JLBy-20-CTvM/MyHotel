@@ -14,7 +14,14 @@ def menu_clients():
         if choice == "1":
             clients = get_all_clients()
             for c in clients:
-                print(f"{c.id}. {c.surname} {c.name} {c.patronymic or ''} | Паспорт: {c.passport_details} | Адрес: {c.address} | Комментарий: {c.comment}")
+                print(
+                      f"{c.id}.",
+                      f"{c.surname} {c.name} {c.patronymic or ''}".strip(),
+                      f"Паспорт: {c.passport_details}",
+                      f"Адрес: {c.address}",
+                      f"Комментарий: {c.comment}",
+                      sep=" ")
+
         elif choice == "2":
             print("\n=== Добавление клиента ===")
             surname = input("Фамилия: ")

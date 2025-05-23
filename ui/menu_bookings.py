@@ -13,7 +13,13 @@ def menu_bookings():
         if choice == "1":
             bookings = get_all_bookings()
             for b in bookings:
-                print(f"ID: {b.id}, Клиент ID: {b.client_id}, Номер ID: {b.room_id}, С: {b.start_date} по {b.end_date}, Подтверждена: {'Да' if b.is_confirmed else 'Нет'}")
+                print(
+                      "ID:", b.id,
+                      "Клиент ID:", b.client_id,
+                      "Номер ID:", b.room_id,
+                      "С:", b.start_date, "по", b.end_date,
+                      "Подтверждена:" "Да" if b.is_confirmed else "Нет",
+                      sep=", ")
 
         elif choice == "2":
             client_id = int(input("ID клиента: "))
