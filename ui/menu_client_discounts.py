@@ -17,7 +17,9 @@ def menu_client_discounts():
             discounts = get_discounts_by_client_id(client_id)
             print(f"\nСкидки клиента {client_id}:")
             for d in discounts:
-                print(f"ID привязки: {d.id} | Категория скидки ID: {d.discount_category_id}")
+                print(f"""ID привязки: {d.id}
+Категория скидки ID: {d.discount_category_id}
+""")
 
         elif choice == "2":
             print("\nКлиенты:")

@@ -13,14 +13,13 @@ def menu_checkins():
         if choice == "1":
             checkins = get_all_checkins()
             for c in checkins:
-                print(
-                      "ID:", c.id,
-                      "Клиент ID:", c.client_id,
-                      "Номер ID:", c.room_id,
-                      "Место ID:", c.place_id,
-                      "Заезд:", c.checkin_date,
-                      "Выезд:", c.checkout_date or "ещё проживает",
-                      sep=", ")
+                print(f"""{c.id}.
+Клиент ID: {c.client_id}
+Номер ID: {c.room_id}
+Место ID: {c.place_id}
+Заезд: {c.checkin_date}
+Выезд: {c.checkout_date or "ещё проживает"}
+""")
 
         elif choice == "2":
             client_id = int(input("ID клиента: "))

@@ -17,9 +17,9 @@ def main():
         elif user_choice == "2":
             menu_rooms()
         elif user_choice == "3":
-            menu_checkins()
-        elif user_choice == "4":
             menu_bookings()
+        elif user_choice == "4":
+            menu_checkins()
         elif user_choice == "5":
             menu_discounts()
         elif user_choice == "6":

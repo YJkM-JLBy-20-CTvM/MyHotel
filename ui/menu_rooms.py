@@ -14,7 +14,12 @@ def menu_rooms():
         if choice == "1":
             rooms = get_all_rooms()
             for r in rooms:
-                print(f"{r.id}. Номер комнаты: {r.place}, Тип: {r.type}, Вместимость: {r.capacity}, Цена: {r.price} руб.")
+                print(f"""{r.id}. 
+Номер комнаты: {r.place}
+Тип: {r.type}
+Вместимость: {r.capacity}
+Цена: {r.price} руб.
+""")
 
         elif choice == "2":
             room_place = input("Номер комнаты: ")

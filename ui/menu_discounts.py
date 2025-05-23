@@ -13,7 +13,10 @@ def menu_discounts():
         if choice == "1":
             categories = get_all_discount_categories()
             for c in categories:
-                print(f"ID: {c.id}, Название: {c.name}, Скидка: {c.discount_percent}%")
+                print(f"""{c.id}.
+Название: {c.name}
+Скидка: {c.discount_percent}%
+""")
 
         elif choice == "2":
             name = input("Название категории: ")
