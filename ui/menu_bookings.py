@@ -16,7 +16,7 @@ def menu_bookings():
                 print(f"""{b.id}.
 Клиент ID: {b.client_id}
 Номер ID: {b.room_id}
-С: {b.start_date} "по" {b.end_date}
+С {b.start_date} по {b.end_date}
 Подтверждена: {"Да" if b.is_confirmed else "Нет"}
 Базовая цена: {base_price:.2f}
 Скидка: {discount:.0f}%
@@ -27,8 +27,8 @@ def menu_bookings():
             try:
                 client_id = int(input("ID клиента: "))
                 room_id = int(input("ID номера: "))
-                start = input("Дата начала (ГГГГ-ММ-ДД): ")
-                end = input("Дата окончания (ГГГГ-ММ-ДД): ")
+                start = input("Дата начала (ДД-ММ-ГГГГ): ")
+                end = input("Дата окончания (ДД-ММ-ГГГГ): ")
                 booking = Booking(client_id=client_id, room_id=room_id, start_date=start, end_date=end)
                 booking.save()
                 print("[✓] Бронь добавлена.")

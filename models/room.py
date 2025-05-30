@@ -5,10 +5,11 @@ class Room:
 
     def __init__(self, id=None, place=None, type=None, capacity=None, price=None):
         self.id = id
+        self.place = place
         self.type = type
         self.capacity = capacity
         self.price = price
-        self.place = place
+        
 
     def save(self):
         conn = get_connection()
@@ -39,7 +40,7 @@ class Room:
 def get_all_rooms():
     conn = get_connection()
     cur = conn.cursor()
-    cur.execute('SELECT id, type, capacity, price, place FROM rooms')
+    cur.execute('SELECT id, place, type, capacity, price FROM rooms')
     rows = cur.fetchall()
     conn.close()
     return [Room(*row) for row in rows]

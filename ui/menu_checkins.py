@@ -25,14 +25,14 @@ def menu_checkins():
             client_id = int(input("ID клиента: "))
             room_id = int(input("ID номера: "))
             place_id = int(input("ID места: "))
-            checkin_date = input("Дата заселения (ГГГГ-ММ-ДД): ")
+            checkin_date = input("Дата заселения (ДД-ММ-ГГГГ): ")
             checkin = Checkin(client_id=client_id, room_id=room_id, place_id=place_id, checkin_date=checkin_date)
             checkin.save()
             print("[✓] Заселение добавлено.")
 
         elif choice == "3":
             checkin_id = int(input("ID заселения: "))
-            checkout_date = input("Дата выезда (ГГГГ-ММ-ДД): ")
+            checkout_date = input("Дата выезда (ДД-ММ-ГГГГ): ")
             checkin = next((c for c in get_all_checkins() if c.id == checkin_id), None)
 
             if checkin:
