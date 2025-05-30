@@ -38,37 +38,47 @@ def menu_clients():
                 comment=comment
             )
             client.save()
-            print("[✓]Клиент добавлен.")
+            print("[✓] Клиент добавлен.")
+
         elif choice == "3":
-            id_to_delete = int(input("Введите ID клиента для удаления: "))
-            client = Client(id=id_to_delete)
-            client.delete()
-            print("[✗] Клиент удалён.")
+            try:
+                id_to_delete = int(input("Введите ID клиента для удаления: "))
+                client = Client(id=id_to_delete)
+                client.delete()
+                print("[✗] Клиент удалён.")
+            except ValueError:
+                print("[⁉︎] Неверный ввод")
+
         elif choice == "4":
-            id_to_edit = int(input("Введите ID клиента для редактирования: "))
-            current = next((c for c in get_all_clients() if c.id == id_to_edit), None)
-            if not current:
-                print("[⁉︎] Клиент не найден.")
-                continue
-            print("Оставьте поле пустым, чтобы оставить без изменений.")
-            surname = input(f"Фамилия ({current.surname}): ") or current.surname
-            name = input(f"Имя ({current.name}): ") or current.name
-            patronymic = input(f"Отчество ({current.patronymic or ''}): ") or current.patronymic
-            passport = input(f"Паспортные данные ({current.passport_details}): ") or current.passport_details
-            address = input(f"Адрес ({current.address}): ") or current.address
-            comment = input(f"Комментарий ({current.comment}): ") or current.comment
-            updated = Client(
-                id=id_to_edit,
-                surname=surname,
-                name=name,
-                patronymic=patronymic,
-                passport_details=passport,
-                address=address,
-                comment=comment
-            )
-            updated.save()
-            print("[✓] Клиент обновлён.")
+            try:
+                id_to_edit = int(input("Введите ID клиента для редактирования: "))
+                current = next((c for c in get_all_clients() if c.id == id_to_edit), None)
+                if not current:
+                    print("[⁉︎] Клиент не найден.")
+                    continue
+                print("Оставьте поле пустым, чтобы оставить без изменений.")
+                surname = input(f"Фамилия ({current.surname}): ") or current.surname
+                name = input(f"Имя ({current.name}): ") or current.name
+                patronymic = input(f"Отчество ({current.patronymic or ''}): ") or current.patronymic
+                passport = input(f"Паспортные данные ({current.passport_details}): ") or current.passport_details
+                address = input(f"Адрес ({current.address}): ") or current.address
+                comment = input(f"Комментарий ({current.comment}): ") or current.comment
+                updated = Client(
+                    id=id_to_edit,
+                    surname=surname,
+                    name=name,
+                    patronymic=patronymic,
+                    passport_details=passport,
+                    address=address,
+                    comment=comment
+                )
+                updated.save()
+                print("[✓] Клиент обновлён.")
+            except ValueError:
+                print("[⁉︎] Неверный ввод")
+
         elif choice == "0":
             break
+
         else:
             print("[⁉︎] Неверный ввод.")

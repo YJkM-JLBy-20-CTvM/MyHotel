@@ -19,17 +19,23 @@ def menu_discounts():
 """)
 
         elif choice == "2":
-            name = input("Название категории: ")
-            percent = float(input("Процент скидки: "))
-            category = DiscountCategory(name=name, discount_percent=percent)
-            category.save()
-            print("[✓] Категория добавлена.")
+            try:
+                name = input("Название категории: ")
+                percent = float(input("Процент скидки: "))
+                category = DiscountCategory(name=name, discount_percent=percent)
+                category.save()
+                print("[✓] Категория добавлена.")
+            except ValueError:
+                print("[⁉︎] Неверный ввод")
 
         elif choice == "3":
-            id_to_delete = int(input("ID категории: "))
-            category = DiscountCategory(id=id_to_delete)
-            category.delete()
-            print("[✗] Категория удалена.")
+            try:
+                id_to_delete = int(input("ID категории: "))
+                category = DiscountCategory(id=id_to_delete)
+                category.delete()
+                print("[✗] Категория удалена.")
+            except ValueError:
+                print("[⁉︎] Неверный ввод")
 
         elif choice == "0":
             break

@@ -32,7 +32,7 @@ def menu_bookings():
                 booking = Booking(client_id=client_id, room_id=room_id, start_date=start, end_date=end)
                 booking.save()
                 print("[✓] Бронь добавлена.")
-            except Exception as e:
+            except ValueError:
                 print("[⁉︎] Неверный ввод.")
 
         elif choice == "3":
@@ -43,11 +43,11 @@ def menu_bookings():
                 if booking:
                     booking.is_confirmed = True
                     booking.save()
-                    print("[✓] Бронь подтверждена")
+                    print("[✓] Бронь подтверждена.")
                 else:
                     print("[⁉︎] Бронь не найдена.")
-            except Exception as e:
-                print(f"[⁉︎] Неверный ввод: {e}")
+            except ValueError:
+                print("[⁉︎] Неверный ввод.")
 
         elif choice == "0":
             break

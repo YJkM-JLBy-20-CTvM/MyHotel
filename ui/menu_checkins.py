@@ -22,26 +22,31 @@ def menu_checkins():
 """)
 
         elif choice == "2":
-            client_id = int(input("ID клиента: "))
-            room_id = int(input("ID номера: "))
-            place_id = int(input("ID места: "))
-            checkin_date = input("Дата заселения (ДД-ММ-ГГГГ): ")
-            checkin = Checkin(client_id=client_id, room_id=room_id, place_id=place_id, checkin_date=checkin_date)
-            checkin.save()
-            print("[✓] Заселение добавлено.")
+            try:
+                client_id = int(input("ID клиента: "))
+                room_id = int(input("ID номера: "))
+                place_id = int(input("ID места: "))
+                checkin_date = input("Дата заселения (ДД-ММ-ГГГГ): ")
+                checkin = Checkin(client_id=client_id, room_id=room_id, place_id=place_id, checkin_date=checkin_date)
+                checkin.save()
+                print("[✓] Заселение добавлено.")
+            except ValueError:
+                print("[⁉︎] Неверный ввод")
 
         elif choice == "3":
-            checkin_id = int(input("ID заселения: "))
-            checkout_date = input("Дата выезда (ДД-ММ-ГГГГ): ")
-            checkin = next((c for c in get_all_checkins() if c.id == checkin_id), None)
+            try:
+                checkin_id = int(input("ID заселения: "))
+                checkout_date = input("Дата выезда (ДД-ММ-ГГГГ): ")
+                checkin = next((c for c in get_all_checkins() if c.id == checkin_id), None)
 
-            if checkin:
-                checkin.checkout_date = checkout_date
-                checkin.save()
-                print("[✓] Дата выезда обновлена.")
-
-            else:
-                print("[⁉︎] Заселение не найдено.")
+                if checkin:
+                    checkin.checkout_date = checkout_date
+                    checkin.save()
+                    print("[✓] Дата выезда обновлена.")
+                else:
+                    print("[⁉︎] Заселение не найдено.")
+            except ValueError:
+                print("[⁉︎] Неверный ввод")
 
         elif choice == "0":
             break
